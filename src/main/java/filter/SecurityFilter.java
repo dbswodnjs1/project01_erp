@@ -43,8 +43,8 @@ public class SecurityFilter implements Filter{
 		String path=uri.substring(cPath.length()); // "/index.jsp"
 				
 		//로그인 없이 접근 가능한 요청 경로면 필터링을 하지 않는다
-		// if(isWhiteList(path)) {
-		if(true) {
+		if(isWhiteList(path)) {
+		
 			chain.doFilter(request, response);
 			return; //메소드를 여기서 종료하기
 		}
@@ -99,8 +99,8 @@ public class SecurityFilter implements Filter{
         if ("ROLE_KING".equals(role)) {
             return true; // 모든 경로 접근 허용
         } else if ("ROLE_ADMIN".equals(role)) {
-        	// "/index/branchindex.jsp" 하위 경로를 제외한 모든 경로 접근 허용
-            return !path.startsWith("/index/branchindex.jsp");
+        	// "/index/branchindex.jsp" 하위와 "/hrm/" 경로를 제외한 모든 경로 접근 허용
+            return !path.startsWith("/index/branchindex.jsp") && !path.startsWith("/hrm/");
         } else if ("ROLE_MANAGER".equals(role)) {
         	// "/index/headqueaterindex.jsp" 하위 경로를 제외한 모든 경로 접근 허용
             return !path.startsWith("/index/headquaterindex.jsp");
